@@ -1,0 +1,323 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================
+   THEME CSS VARIABLES
+   ========================================= */
+:root {
+  /* Dark theme (default) */
+  --clr-bg:          #050816;
+  --clr-bg-card:     rgba(255,255,255,0.03);
+  --clr-bg-card-h:   rgba(255,255,255,0.06);
+  --clr-border:      rgba(255,255,255,0.08);
+  --clr-border-h:    rgba(0,229,255,0.3);
+  --clr-input-bg:    rgba(255,255,255,0.04);
+  --clr-input-bg-h:  rgba(255,255,255,0.07);
+  --clr-text:        #e2e8f0;
+  --clr-text-muted:  #94a3b8;
+  --clr-text-faint:  #64748b;
+  --clr-shadow:      none;
+  --clr-shadow-h:    0 0 30px rgba(0,229,255,0.12);
+  --backdrop:        blur(12px);
+}
+
+html.light {
+  --clr-bg:          #f1f5f9;
+  --clr-bg-card:     rgba(255,255,255,0.85);
+  --clr-bg-card-h:   rgba(255,255,255,0.97);
+  --clr-border:      rgba(15,23,42,0.1);
+  --clr-border-h:    rgba(0,185,204,0.5);
+  --clr-input-bg:    rgba(255,255,255,0.9);
+  --clr-input-bg-h:  rgba(255,255,255,1);
+  --clr-text:        #0f172a;
+  --clr-text-muted:  #475569;
+  --clr-text-faint:  #94a3b8;
+  --clr-shadow:      0 1px 4px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+  --clr-shadow-h:    0 4px 20px rgba(0,0,0,0.1);
+  --backdrop:        blur(12px) saturate(180%);
+}
+
+/* =========================================
+   BASE
+   ========================================= */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #00E5FF #050816;
+  }
+  html.light * {
+    scrollbar-color: #00b8cc #e2e8f0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--clr-text);
+  }
+}
+
+/* =========================================
+   COMPONENT CLASSES (CSS-VAR DRIVEN)
+   ========================================= */
+@layer components {
+  /* Glass card */
+  .glass-card {
+    background: var(--clr-bg-card);
+    backdrop-filter: var(--backdrop);
+    -webkit-backdrop-filter: var(--backdrop);
+    border: 1px solid var(--clr-border);
+    border-radius: 1rem;
+    box-shadow: var(--clr-shadow);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .glass-card-hover {
+    background: var(--clr-bg-card);
+    backdrop-filter: var(--backdrop);
+    -webkit-backdrop-filter: var(--backdrop);
+    border: 1px solid var(--clr-border);
+    border-radius: 1rem;
+    box-shadow: var(--clr-shadow);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .glass-card-hover:hover {
+    background: var(--clr-bg-card-h);
+    border-color: var(--clr-border-h);
+    box-shadow: var(--clr-shadow-h);
+    transform: translateY(-4px);
+  }
+
+  /* Glow effects (only meaningful in dark mode) */
+  .glow-cyan {
+    text-shadow: 0 0 30px rgba(0,229,255,0.35);
+  }
+  html.light .glow-cyan {
+    text-shadow: none;
+  }
+
+  .glow-purple {
+    text-shadow: 0 0 30px rgba(124,58,237,0.35);
+  }
+  html.light .glow-purple {
+    text-shadow: none;
+  }
+
+  /* Gradient text — works on both modes */
+  .gradient-text {
+    @apply bg-gradient-to-r from-cyan-500 to-purple-400 bg-clip-text text-transparent;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm font-poppins
+      bg-cyan-500 text-navy-950 transition-all duration-300
+      hover:bg-cyan-400 hover:-translate-y-0.5
+      focus:outline-none focus:ring-2 focus:ring-cyan-500/50;
+  }
+  html.dark .btn-primary {
+    box-shadow: 0 0 0 0 rgba(0,229,255,0);
+  }
+  html.dark .btn-primary:hover {
+    box-shadow: 0 0 30px rgba(0,229,255,0.4);
+  }
+  html.light .btn-primary {
+    box-shadow: 0 2px 8px rgba(0,184,204,0.25);
+  }
+  html.light .btn-primary:hover {
+    box-shadow: 0 4px 16px rgba(0,184,204,0.4);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm font-poppins
+      transition-all duration-300 hover:-translate-y-0.5
+      focus:outline-none focus:ring-2;
+    background: var(--clr-bg-card);
+    border: 1px solid rgba(0,229,255,0.35);
+    color: #00b8cc;
+  }
+  html.light .btn-secondary {
+    color: #0077aa;
+    border-color: rgba(0,184,204,0.4);
+  }
+  .btn-secondary:hover {
+    background: rgba(0,229,255,0.1);
+    border-color: rgba(0,229,255,0.6);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium text-sm
+      transition-all duration-300;
+    color: var(--clr-text-muted);
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--clr-text);
+  }
+  html.light .btn-ghost:hover {
+    background: rgba(0,0,0,0.05);
+  }
+
+  /* Input */
+  .input-field {
+    @apply w-full rounded-xl px-4 py-3.5 text-sm transition-all duration-300 font-inter
+      focus:outline-none;
+    background: var(--clr-input-bg);
+    border: 1px solid var(--clr-border);
+    color: var(--clr-text);
+  }
+  .input-field::placeholder {
+    color: var(--clr-text-faint);
+  }
+  .input-field:focus {
+    background: var(--clr-input-bg-h);
+    border-color: rgba(0,229,255,0.5);
+  }
+
+  /* Section */
+  .section-pad {
+    @apply py-20 md:py-28 px-4;
+  }
+
+  .section-label {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-widest uppercase font-inter;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.2);
+    color: #00b8cc;
+  }
+  html.light .section-label {
+    background: rgba(0,184,204,0.08);
+    border-color: rgba(0,184,204,0.25);
+    color: #0077aa;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold font-poppins leading-tight;
+    color: var(--clr-text);
+  }
+
+  .section-subtitle {
+    @apply text-base md:text-lg leading-relaxed font-inter;
+    color: var(--clr-text-muted);
+  }
+
+  /* Card border glow */
+  .border-glow {
+    box-shadow: var(--clr-shadow);
+  }
+  html.dark .border-glow {
+    box-shadow: 0 0 20px rgba(0,229,255,0.05), inset 0 0 20px rgba(0,229,255,0.02);
+  }
+
+  .border-glow-hover {
+    transition: box-shadow 0.3s ease;
+  }
+  html.dark .border-glow-hover:hover {
+    box-shadow: 0 0 30px rgba(0,229,255,0.15), 0 0 60px rgba(124,58,237,0.08);
+  }
+  html.light .border-glow-hover:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  /* backward compat */
+  .glow-text { @apply glow-cyan; }
+  .glow-border { @apply border-glow; }
+  .glow-border-strong { @apply border-glow; }
+  .card-hover { @apply glass-card-hover; }
+  .glass { @apply glass-card; }
+}
+
+/* =========================================
+   LIGHT MODE TEXT OVERRIDES
+   ========================================= */
+html.light .text-white,
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light h4.text-white,
+html.light p.text-white,
+html.light span.text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-200 { color: #1e293b !important; }
+html.light .text-slate-300 { color: #334155 !important; }
+html.light .text-slate-400 { color: #475569 !important; }
+html.light .text-slate-500 { color: #64748b !important; }
+html.light .text-slate-600 { color: #475569 !important; }
+
+/* Keep accent colors but darken slightly for contrast on light bg */
+html.light .text-cyan-400 { color: #0088aa !important; }
+html.light .text-cyan-300 { color: #007799 !important; }
+html.light .text-purple-400 { color: #6d28d9 !important; }
+html.light .text-purple-300 { color: #5b21b6 !important; }
+html.light .text-neon-400 { color: #0088aa !important; }
+html.light .text-green-400 { color: #047857 !important; }
+
+/* Backgrounds */
+html.light .bg-navy-950 { background-color: #f1f5f9 !important; }
+html.light .bg-navy-900 { background-color: #f8fafc !important; }
+html.light .bg-navy-800 { background-color: #ffffff !important; }
+html.light .bg-navy-800\/50 { background-color: rgba(255,255,255,0.9) !important; }
+html.light .bg-cyber-950 { background-color: #f1f5f9 !important; }
+html.light .bg-cyber-800 { background-color: #ffffff !important; }
+html.light .bg-cyber-800\/50 { background-color: rgba(255,255,255,0.85) !important; }
+
+/* Dark-on-dark gradients → light variants */
+html.light .bg-gradient-to-b.from-transparent.via-navy-900\/30.to-transparent,
+html.light [class*="via-navy-900"] {
+  background: transparent !important;
+}
+
+/* Header bg in light mode handled by inline scroll state */
+html.light header {
+  background-color: rgba(255,255,255,0.92) !important;
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+}
+
+/* Footer in light mode */
+html.light footer {
+  background-color: #e2e8f0 !important;
+  border-top-color: rgba(0,0,0,0.08) !important;
+}
+html.light footer .border-t {
+  border-top-color: rgba(0,0,0,0.08) !important;
+}
+
+/* Section backgrounds in light mode */
+html.light section,
+html.light main {
+  background-color: transparent;
+}
+
+/* Pricing card highlight in light mode */
+html.light .from-cyan-500\/\[0\.08\] {
+  --tw-gradient-from: rgba(0,229,255,0.04) !important;
+}
+
+/* Portfolio image overlay lighter */
+html.light .bg-navy-950\/60 { background-color: rgba(15,23,42,0.55) !important; }
+html.light .bg-navy-950\/80 { background-color: rgba(15,23,42,0.7) !important; }
+
+/* Sample gallery page */
+html.light .bg-cyber-950\/80 { background-color: rgba(241,245,249,0.9) !important; }
+
+@layer utilities {
+  .opacity-0-init { opacity: 0; }
+  .animate-in {
+    animation: fadeUp 0.7s ease-out forwards;
+  }
+}
